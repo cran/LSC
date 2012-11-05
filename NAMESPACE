@@ -1,0 +1,8 @@
+export(LICORS2LSC)
+export(make_legend)
+export(plot_LSC_1plus1D)
+export(plot_LSC_2plus1D)
+export(states2LSC)
+export(states2probs)
+import(LICORS)
+S3method(plot,LSC)

@@ -1,0 +1,8 @@
+		 CHANGES IN LSC VERSION 0.1
+
+NEW FEATURES
+
+  - first version of LSC: 
+  The package heavily depends on ist *sister* package **LICORS** which estimates
+  the state space from spatio-temporal data.  The function `LICORS2LSC()` can then
+  be used to visualize local statistical complexity (LSC) for (1+1)D and (2+1)D fields.
