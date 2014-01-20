@@ -1,10 +1,10 @@
 #' @title Utilities for LSC class
 #' @name LSC-utils
-#' @aliases plot.LSC plot_LSC_1plus1D plot_LSC_2plus1D
+#' @aliases plot.LSC plot_LSC_0plus1D plot_LSC_1plus1D plot_LSC_2plus1D
 #' @description 
 #' 
 #' The \code{"LSC"} class lies at the core of this package as it describes
-#' the spatio-temporal patterns in the data.  It is usually an array with the 
+#' spatio-temporal patterns in the data.  It is usually an array with the 
 #' same spatio-temporal resolution as the original dataset.
 #' 
 #' \code{plot.LSC} plots LSC of \eqn{(1+1)D} and \eqn{(2+1)D} systems.
@@ -24,15 +24,20 @@ NULL
 plot.LSC <- function(x, ...) {
   object <- x
   
-  ndim <- length(dim(object))
+  if (is.null(dim(object))) {
+    space.dim <- 0
+  } else {
+    space.dim <- length(dim(object)) - 1
+  }
   
-  if (ndim < 2){
-    stop("Plotting for time series LSC not yet implemented.")
-  } else if (ndim == 2){
+  if (space.dim == 0) {
+    plot_LSC_0plus1D(object, ...)
+  } else if (space.dim == 1) {
     plot_LSC_1plus1D(object, ...)
-  } else if (ndim == 3){
+  } else if (space.dim == 2) {
     plot_LSC_2plus1D(object, ...)
   } else {
-    stop("Plotting for more than 3D is not implemented.")
-  } 
-} 
+    warning("Plotting for than (2+1)D (or more) is not implemented.")
+    plot.new()
+  }
+}

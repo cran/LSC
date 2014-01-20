@@ -20,26 +20,29 @@
 #' # see 2nd example in 'LSC-package'
 #' }
 
-LICORS2LSC = function(object, type = "weights") {
+LICORS2LSC = function(object, type = c("weights", "argmax")) {
   
-  if (type == "argmax"){
-    out <- states2LSC(state_vector = object$theta)
-  } else if (type == "weights"){
-    out <- states2LSC(weight_matrix = object$conditional_state_probs)
-  } else {
-    stop("Not implemented.")
-  }
+  type <- match.arg(type)
+  switch(type,
+         argmax = {
+           out <- states2LSC(states = object$states)
+         },
+         weights = {
+           out <- states2LSC(weight.matrix = object$conditional.state.probs$opt)
+         })
+
+  space.dim <- length(object$dim$truncated) - 1
   
-  space_dim = length(object$dim$truncated) - 1
-  
-  if (space_dim == 1){
-    out = t(matrix(out, ncol = object$dim$truncated[2], byrow = TRUE))
-  } else if (space_dim == 2){
-    out = array(out, dim = c(object$dim$truncated[-1], object$dim$truncated[1]))
+  if (space.dim == 0) {
+    out <- ts(out)
+  } else if (space.dim == 1) {
+    out <- t(matrix(out, ncol = object$dim$truncated[2], byrow = TRUE))
+  } else if (space.dim == 2) {
+    out <- array(out, dim = c(object$dim$truncated[-1], object$dim$truncated[1]))
     # R.utils method
     #out = wrap( array(out, dim = c(object$dim$truncated[-1], object$dim$truncated[1])), map = list(2,1) )
   }
-  
-  class(out) = "LSC"
+
+  class(out) <- "LSC"
   invisible(out)
 }

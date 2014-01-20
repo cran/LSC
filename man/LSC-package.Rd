@@ -19,11 +19,11 @@
   There are two ways the state space can be represented:
   either as a unique state label or as a vector of weights.
   These two are the principal arguments in the functions of
-  this package: \describe{ \item{\code{weight_matrix}}{an
+  this package: \describe{ \item{\code{weight.matrix}}{an
   \eqn{N \times K} matrix, where \eqn{N} are the samples
   and \eqn{K} are the states. That is, each row contains a
   vector of length \eqn{K} that adds up to one (the mixture
-  weights).} \item{\code{state_vector}}{a vector of length
+  weights).} \item{\code{states}}{a vector of length
   \eqn{N} with entry \eqn{i} being the label \eqn{k = 1,
   \ldots, K} of PLC \eqn{i}} }
 
@@ -34,9 +34,9 @@
 \examples{
 ## known predictive state space with a state-vector
 data(contCA00)
-ll <- states2LSC(state_vector = contCA00$predictive_states - min(contCA00$predictive_states) + 
+ll <- states2LSC(states = contCA00$predictive_states - min(contCA00$predictive_states) + 
     1)
-image2(ll, density = TRUE)
+image2(ll, density = TRUE, legend = FALSE)
 
 # An example using estimates from LICORS
 \dontrun{

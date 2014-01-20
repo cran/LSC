@@ -1,0 +1,16 @@
+citHeader("To cite package 'LSC' in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry = "Manual",
+         title = "LSC: Local Statistical Complexity - Automatic Pattern Discovery in Spatio-Temporal Data",
+         author = personList(as.person("Georg M. Goerg")),
+         year = year,
+         note = vers,
+
+         textVersion =
+         paste0("Georg M. Goerg (",
+                year,
+                "). LSC: Local Statistical Complexity - Automatic Pattern Discovery in Spatio-Temporal Data. ",
+                vers, "."))

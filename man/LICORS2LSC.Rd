@@ -2,7 +2,7 @@
 \alias{LICORS2LSC}
 \title{Estimates LSC from a LICORS estimate}
 \usage{
-LICORS2LSC(object, type = "weights")
+LICORS2LSC(object, type = c("weights", "argmax"))
 }
 \arguments{
   \item{object}{an object of class \code{"LICORS"}}

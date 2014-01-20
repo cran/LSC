@@ -10,17 +10,15 @@
 #' \dontrun{
 #' data(contCA00)
 #' 
-#' temp_lsc = states2LSC(state_vector = contCA00$predictive_states - min(contCA00$predictive_states) + 1)
-#' class(temp_lsc) = c("LICORS", "LSC_1plus1D")
-#' plot(temp_lsc)
+#' temp_lsc = states2LSC(states = contCA00$predictive_states - min(contCA00$predictive_states) + 1)
+#' class(temp_lsc) = c("LSC", "LSC_1plus1D")
+#' plot_LSC_1plus1D(temp_lsc)
 #' }
 #'
 
-plot_LSC_1plus1D = function(z, col = NULL, zlim.label = "bits", 
-                            heights = c(2,5), 
-                            widths = c(5,2)){
+plot_LSC_1plus1D = function(z, col = NULL, lsc.unit = "bits", 
+                            heights = c(2,5), widths = c(5,2)) {
   
-  op <- par(no.readonly = TRUE)
   LSC <- z
 
   if (is.null(col)) {
@@ -54,9 +52,9 @@ plot_LSC_1plus1D = function(z, col = NULL, zlim.label = "bits",
   layout(matrix(c(1, 3, 2, 4), byrow = TRUE, ncol = 2), widths = widths, 
          heights = heights)
   par(mar = c(0.5, 5, 2, 0), cex.lab = 2, cex.axis = 2)
-  plot(1:card_space, LSC_temporal_avg, main = "", ylab = "", xlab = "", pch = 19, 
+  plot(seq_len(card_space), LSC_temporal_avg, main = "", ylab = "", xlab = "", pch = 19, 
        axes = FALSE)
-  lines(1:card_space, LSC_temporal_avg_smooth, lwd = 2, col = "red")
+  lines(seq_len(card_space), LSC_temporal_avg_smooth, lwd = 2, col = "red")
   box()
   axis(1, at = pretty(LSC_temporal_avg))
   mtext("bits", 1, line = 3, cex = 1.5)
@@ -68,13 +66,14 @@ plot_LSC_1plus1D = function(z, col = NULL, zlim.label = "bits",
   image2(LSC, col = col, xlab = "Space", ylab = "Time", axes = FALSE, 
          legend = FALSE)
   box()
-  axis(2, at = pretty(1:nrow(LSC))[-length(pretty(1:nrow(LSC)))], labels = rev(pretty(1:nrow(LSC))[-1]) )
-  axis(1, at = pretty(1:ncol(LSC))[-length(pretty(1:ncol(LSC)))])
+  axis(2, at = pretty(seq_len(nrow(LSC)))[-length(pretty(1:nrow(LSC)))], 
+       labels = rev(pretty(seq_len(nrow(LSC)))[-1]) )
+  axis(1, at = pretty(seq_len(nrow(LSC)))[-length(pretty(1:ncol(LSC)))])
   # mtext('Time', 1, line = 0.5, cex = 1.5) mtext('Space', 2, line = 0.5,
   # cex = 1.5)
   
   par(mar = c(0.5, 0.5, 2, 10))
-  make_legend(data = LSC, col = col, side = 4, col.label = zlim.label)
+  make_legend(data = LSC, col = col, side = 4, col.label = lsc.unit)
   
   par(mar = c(5, 0.5, 0, 2), cex.lab = 2, cex.axis = 2)
   plot(LSC_spatial_avg, TT:1,  main = "", ylab = "bits", 
@@ -83,6 +82,5 @@ plot_LSC_1plus1D = function(z, col = NULL, zlim.label = "bits",
   box()
   axis(2, at = pretty(LSC_spatial_avg))
   mtext("Spatial Average", 4, line = 0.5, cex = 1.5)
-  #par(op)
 }
 

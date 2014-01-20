@@ -19,17 +19,14 @@
 #' state label or as a vector of weights.  These two are the principal arguments 
 #' in the functions of this package:
 #' \describe{
-#'  \item{\code{weight_matrix}}{an \eqn{N \times K} matrix, where \eqn{N} are 
+#'  \item{\code{weight.matrix}}{an \eqn{N \times K} matrix, where \eqn{N} are 
 #'                              the samples and \eqn{K} are the states. That is, 
 #'                              each row contains a vector of length \eqn{K} that
 #'                              adds up to one (the mixture weights).}
-#'  \item{\code{state_vector}}{a vector of length \eqn{N} with entry \eqn{i} being
+#'  \item{\code{states}}{a vector of length \eqn{N} with entry \eqn{i} being
 #'                             the label \eqn{k = 1, \ldots, K} of PLC \eqn{i}}                    
 #' } 
 #'
-#' 
-#' 
-#' 
 #' This is an early release: some function names and arguments might/will
 #' (slightly) change in the future, so regularly check with new package updates.
 #' @keywords package
@@ -53,21 +50,19 @@
 #' \code{\link{plot.LSC}} function shows informative plots for \eqn{(1+1)D} and
 #' \eqn{(2+1)D} systems.
 #' 
-#' @import LICORS
+#' @import LICORS RColorBrewer fields gam Matrix
 #' 
 #' @examples
 #' ## known predictive state space with a state-vector
 #' data(contCA00)
-#' ll <- states2LSC(state_vector = contCA00$predictive_states - min(contCA00$predictive_states) + 1)
-#' image2(ll, density = TRUE)
+#' ll <- states2LSC(states = contCA00$predictive_states - min(contCA00$predictive_states) + 1)
+#' image2(ll, density = TRUE, legend = FALSE)
 #'
 #' # An example using estimates from LICORS
 #' \dontrun{
 #' example(LICORS) # this will give an object 'mod' of class 'LICORS'
 #' image2(LICORS2LSC(mod))
 #' }
-#' 
-#' 
-#' 
-#' 
+#'
+ 
 NULL
